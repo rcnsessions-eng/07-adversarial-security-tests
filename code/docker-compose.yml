@@ -1,0 +1,14 @@
+name: zero-trust-adversarial-security
+services:
+  checks:
+    image: zero-trust-adversarial-security-checks:0.1.0
+    build:
+      context: ../..
+      dockerfile: 07-adversarial-security-tests/code/Dockerfile
+      target: checks
+    read_only: true
+    tmpfs: ["/tmp:size=128m,mode=1777"]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 512m
+    network_mode: none

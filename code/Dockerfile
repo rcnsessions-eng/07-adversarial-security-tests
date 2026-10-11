@@ -1,0 +1,5 @@
+FROM zero-trust-identity-delegation-checks:0.1.0 AS checks
+COPY 07-adversarial-security-tests/code/tests /adversarial-tests
+COPY 07-adversarial-security-tests/code/scripts /adversarial-scripts
+COPY 07-adversarial-security-tests/code/pyproject.toml /adversarial/pyproject.toml
+CMD ["sh", "-c", "ruff check --config /adversarial/pyproject.toml /adversarial-tests /adversarial-scripts && ruff format --check --config /adversarial/pyproject.toml /adversarial-tests /adversarial-scripts && mypy --config-file /adversarial/pyproject.toml /adversarial-scripts && python -m pytest -p no:cacheprovider /adversarial-tests /identity-tests -q && python -m pytest -p no:cacheprovider --import-mode=importlib /mcp-tests /isolation-tests /checks /app/tests -q && opa test /policy /tools-policy && python /scripts/mutation_check.py"]

@@ -1,0 +1,14 @@
+[tool.ruff]
+line-length = 96
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app", "learning_tools"]
+
+[tool.mypy]
+strict = true
+python_version = "3.12"
+cache_dir = "/tmp/mypy-prd07"
